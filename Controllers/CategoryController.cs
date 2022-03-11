@@ -8,17 +8,55 @@ namespace Pedidos.Controllers
     [Route("api/[controller]")]
     public class CategoryController: ControllerBase
     {
-        public IActionResult Post(Category category, ApplicationDbContext context)
+        readonly ApplicationDbContext _context;
+
+        public CategoryController(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
+
+        [HttpPost]
+        public IActionResult Post(Category category)
         {
             var _category = new Category
             {
                 Name = category.Name,
+                CreatedBy = "Test",
+                CreatedOn = DateTime.Now,
+                ModifiedBy = "Test",
+                ModifiedOn = DateTime.Now,
             };
 
-            context.Categories.Add(_category);  
-            context.SaveChanges();
+            _context.Categories.Add(_category);
+            _context.SaveChanges();
 
-            return CreatedAtAction("/category", _category.Id);
+            return Created("/category", _category.Id);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var categories = _context.Categories.Select(c => new { c.Name, c.Active, c.Id});
+            return Ok(categories);
+        }
+
+        [HttpPut]
+        public IActionResult Put(Category category)
+        {
+            var newCategory = _context.Categories.Where(c=>c.Id == category.Id).FirstOrDefault();
+            if(newCategory == null)
+            {
+                return NotFound();
+            }
+
+            newCategory.Name = category.Name;
+            newCategory.Active = category.Active;
+            newCategory.ModifiedBy = "Test";
+            newCategory.ModifiedOn = DateTime.Now;
+
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

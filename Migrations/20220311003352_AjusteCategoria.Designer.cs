@@ -11,8 +11,8 @@ using Pedidos.Infra.Data;
 namespace Pedidos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220310171435_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220311003352_AjusteCategoria")]
+    partial class AjusteCategoria
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace Pedidos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<bool?>("Active")
+                    b.Property<bool>("Active")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("CreatedBy")
@@ -43,7 +43,9 @@ namespace Pedidos.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -56,7 +58,7 @@ namespace Pedidos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<bool?>("Active")
+                    b.Property<bool>("Active")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<Guid>("CategoryId")
@@ -69,7 +71,9 @@ namespace Pedidos.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool>("HasStock")
                         .HasColumnType("tinyint(1)");
@@ -81,7 +85,9 @@ namespace Pedidos.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("longtext");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 

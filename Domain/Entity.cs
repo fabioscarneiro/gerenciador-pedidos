@@ -7,11 +7,12 @@
         public DateTime CreatedOn { get; set; }
         public DateTime ModifiedOn { get; set; }
         public string? ModifiedBy { get; set; }
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         public Entity()
         {
             Id = Guid.NewGuid();
+            Active = true;
         }
    
     }
