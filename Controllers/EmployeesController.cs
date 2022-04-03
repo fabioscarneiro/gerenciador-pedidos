@@ -56,7 +56,7 @@ namespace Pedidos.Controllers
                 var name = clainName != null ? clainName.Value : string.Empty;
                 
                 employees.Add(new Employee(user.Email,name));
-             }
+            }
 
             var result = employees.Select(e => new { e.Name, e.Email }).OrderBy(x => x.Name);
             return Ok(result);
